@@ -37,3 +37,13 @@ FROM  sys.dm_db_index_physical_stats (db_id('AdventureWorks2017'),NULL,NULL,NULL
 WHERE object_name([object_id])='Product'
 ```
 2. Examine the query results, noting the index types and fragmentation.
+
+## DBCC IND and DBCC PAGE
+
+**DBCC IND**: It is one of the undocumented commands, It is not supported by Microsoft. This command helps in identifying the page numbers that table or index is using. The syntax looks like below. 
+
+**Syntax**: DBCC IND (‘DBName’ or DBID, ‘TableName’ or ObjectId, NOn Clustred Index ID)
+
+The third parameter can be the Non Clustered Index Id from Sys.indexes table or 1 or 0 or -1 or -2.  -1 provides complete information about all type of pages ( in row data, row over flow data, IAM, all indexes ) associated with the table.
+
+
