@@ -46,7 +46,7 @@ WHERE object_name([object_id])='Product'
 
 The third parameter can be the Non Clustered Index Id from Sys.indexes table or 1 or 0 or -1 or -2.  -1 provides complete information about all type of pages ( in row data, row over flow data, IAM, all indexes ) associated with the table.
 
-![Data after running DBCC IND](./Pictures/sql_pct01.png)
+![Data after running DBCC IND](../Pictures/sql_pct01.png)
 
 **Explanation of the what does each column mean:**
 
@@ -76,6 +76,6 @@ The third parameter can be the Non Clustered Index Id from Sys.indexes table or 
 **Syntax:** DBCC PAGE(‘DBName’ or DBID, FileNumber, PageNumber, PrintOption)
    PrintOption can be 0 or 1 or 2 or 3 – each option provides different information.
 
-![Data after running DBCC PAGE](./Pictures/sql_pct02.png)
+![Data after running DBCC PAGE](../Pictures/sql_pct02.png)
 
 
