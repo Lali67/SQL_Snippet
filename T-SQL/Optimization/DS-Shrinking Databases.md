@@ -23,5 +23,11 @@ WHERE avg_fragmentation_in_percent > 0
 ORDER BY avg_fragmentation_in_percent DESC;
 ```
 ## How to shrink a database
+```sql
+USE [AdventureWorks2017]
+GO
+DBCC SHRINKDATABASE(N'AdventureWorks2017' )
+GO
+```
 ## How to compact a database
 ## How to repair a database
