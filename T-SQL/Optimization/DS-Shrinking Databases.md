@@ -1,3 +1,5 @@
+# Optimizing Database Structures
+
 ## Shrinking a file -- Best Practices
 
 #### Consider the following information when you plan to shrink a file:
