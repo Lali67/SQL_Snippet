@@ -20,3 +20,6 @@ FROM sys.dm_db_index_physical_stats(DB_ID('AdventureWorks2017'),NULL,NULL,NULL,N
 WHERE avg_fragmentation_in_percent > 0 
 ORDER BY avg_fragmentation_in_percent DESC;
 ```
+## How to shrink a database
+## How to compact a database
+## How to repair a database
