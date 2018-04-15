@@ -24,9 +24,16 @@ ORDER BY avg_fragmentation_in_percent DESC;
 ```
 ## How to shrink a database
 ```sql
+-- Shrink a database
 USE [AdventureWorks2017]
 GO
 DBCC SHRINKDATABASE(N'AdventureWorks2017' )
+GO
+
+-- Shrink a file
+USE [AdventureWorks2017]
+GO
+DBCC SHRINKFILE (N'AdventureWorks2017' , 0, TRUNCATEONLY)
 GO
 ```
 ## How to compact a database
