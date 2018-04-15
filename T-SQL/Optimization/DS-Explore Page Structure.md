@@ -1,3 +1,6 @@
+<dl>
+	<font size="2" color="blue">This is some text!</font>
+<\dl>
 ## Explore Page Structure
 
 1. Start Microsoft SQL Server Management Studio and connect to your database instance.
