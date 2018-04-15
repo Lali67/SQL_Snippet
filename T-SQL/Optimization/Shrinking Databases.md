@@ -7,15 +7,16 @@
   * A shrink operation does not preserve the fragmentation state of indexes in the database, and generally increases fragmentation to a degree. This is another reason not to repeatedly shrink the database.
   * Shrink multiple files in the same database sequentially instead of concurrently. Contention on system tables can cause delays due to blocking.
 ```sql
+--- Check the available space
 SELECT name , size/128.0 - CAST(FILEPROPERTY(name, 'SpaceUsed') AS int)/128.0 AS AvailableSpaceInMB
 FROM sys.database_files;
 
+--- Check the used space
 exec sp_spaceused;
 
+--- Check the fragmentation of indexes
 SELECT object_id, index_type_desc, avg_fragmentation_in_percent, avg_fragment_size_in_pages, page_count
 FROM sys.dm_db_index_physical_stats(DB_ID('AdventureWorks2017'),NULL,NULL,NULL,NULL)
 WHERE avg_fragmentation_in_percent > 0 
 ORDER BY avg_fragmentation_in_percent DESC;
-
-DBCC SHRINKFILE('AdventureWorks2017');
 ```
