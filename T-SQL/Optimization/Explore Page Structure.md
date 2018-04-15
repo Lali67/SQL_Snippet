@@ -1,7 +1,7 @@
 ## Explore Page Structure
 
 1. Start Microsoft SQL Server Management Studio and connect to your database instance.
-2. Click New Query, select the AdventureWorksLT database, type the following Transact-SQL into the query window, then click Execute:
+2. Click New Query, select the AdventureWorks2017 database, type the following Transact-SQL into the query window, then click Execute:
 ``` sql
 SELECT db_name(database_id) AS Database_Name, 
 	object_name([object_id]) AS Table_Name, 
