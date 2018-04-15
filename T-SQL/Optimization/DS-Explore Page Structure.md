@@ -1,6 +1,4 @@
-<div>
-   <font size="2" color="red">This is some text!</font>
-</div>
+# Optimizing Database Structures
 
 ## Explore Page Structure
 
