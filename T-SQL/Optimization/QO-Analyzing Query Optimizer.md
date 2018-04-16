@@ -1,4 +1,23 @@
 ## Samples
+```sql
+SELECT pp.Name
+FROM Production.Product pp
+JOIN Sales.SalesOrderDetail ss
+ON pp.ProductID=ss.ProductID
+JOIN Sales.SalesOrderHeader oh
+ON ss.SalesOrderID=oh.SalesOrderID;
+
+SELECT * 
+FROM HumanResources.Employee 
+WHERE SickLeaveHours=50;
+
+SELECT CHECK_CLAUSE
+FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS
+WHERE CONSTRAINT_NAME = 'CK_Employee_SickLeaveHours';
+____________________________________________________________
+```
+
+```sql
 SELECT *
 FROM sys.dm_exec_query_transformation_stats
 ORDER BY name;
@@ -8,6 +27,7 @@ Plan_handle, query_plan
 FROM sys.dm_exec_query_stats AS qs  
 CROSS APPLY sys.dm_exec_query_plan(qs.plan_handle)  
 ORDER BY total_worker_time/execution_count DESC;  
+```
 
 ## Links
 [Query Processing Architecture Guide-Microsoft](https://docs.microsoft.com/en-us/sql/relational-databases/query-processing-architecture-guide?view=sql-server-2017)
