@@ -7,85 +7,88 @@ GO
 IF EXISTS(select * from sys.objects
 where name='up_Campaign_Replace')
 BEGIN
-DROP PROC Proseware.up_Campaign_Replace
+	DROP PROC Proseware.up_Campaign_Replace
 END
 GO
 
 IF EXISTS(select * from sys.objects
 where name='up_Campaign_Report')
 BEGIN
-DROP PROC Proseware.up_Campaign_Report
+	DROP PROC Proseware.up_Campaign_Report
 END
 GO
 
 IF EXISTS(select * from sys.objects
 where name='up_CampaignResponse_Add')
 BEGIN
-DROP PROC Proseware.up_CampaignResponse_Add
+	DROP PROC Proseware.up_CampaignResponse_Add
 END
 GO
 
 IF EXISTS(select * from sys.objects
 where name='CampaignResponse')
 BEGIN
-DROP TABLE Proseware.CampaignResponse
+	DROP TABLE Proseware.CampaignResponse
 END
 GO
 
 IF EXISTS(select * from sys.objects
 where name='Campaign')
 BEGIN
-DROP TABLE Proseware.Campaign
+	DROP TABLE Proseware.Campaign
 END
 GO
 
 IF EXISTS(select * from sys.schemas
 where name='Proseware')
 BEGIN
-drop schema Proseware
+	DROP schema Proseware
 END
 GO
 
+-------------  Build Tables --------------
 CREATE SCHEMA Proseware;
 GO
 CREATE TABLE Proseware.Campaign
-(CampaignID int PRIMARY KEY,
-CampaignName varchar(20) NOT NULL,
-CampaignTerritoryID int NOT NULL,
-CampaignStartDate date NOT NULL,
-CampaignEndDate date NOT NULL
+( 	CampaignID int PRIMARY KEY,
+	CampaignName varchar(20) NOT NULL,
+	CampaignTerritoryID int NOT NULL,
+	CampaignStartDate date NOT NULL,
+	CampaignEndDate date NOT NULL
 )
 GO
 
 INSERT Proseware.Campaign
 (CampaignID, CampaignName, CampaignTerritoryID, CampaignStartDate, CampaignEndDate)
 SELECT TOP (10000)
-ROW_NUMBER() OVER (ORDER BY a.name, b.name),
-CAST(1000000 +ROW_NUMBER() OVER (ORDER BY a.name, b.name) AS nvarchar(20)),
-(ROW_NUMBER() OVER (ORDER BY a.name, b.name) % 10) + 1,
-DATEADD(dd, ROW_NUMBER() OVER (ORDER BY a.name, b.name) % 3650, '2006-01-01'),
-DATEADD(dd, (ROW_NUMBER() OVER (ORDER BY a.name, b.name) % 3650) + 30, '2006-01-01')
-FROM Production.Product AS a
+	ROW_NUMBER() OVER (ORDER BY a.name, b.name),
+	CAST(1000000 +ROW_NUMBER() OVER (ORDER BY a.name, b.name) AS nvarchar(20)),
+	(ROW_NUMBER() OVER (ORDER BY a.name, b.name) % 10) + 1,
+	DATEADD(dd, ROW_NUMBER() OVER (ORDER BY a.name, b.name) % 3650, '2006-01-01'),
+	DATEADD(dd, (ROW_NUMBER() OVER (ORDER BY a.name, b.name) % 3650) + 30, '2006-01-01')
+FROM  Production.Product AS a
 CROSS JOIN Production.Product AS b
 GO
 
 CREATE TABLE Proseware.CampaignResponse
-(CampaignResponseID int IDENTITY(1,1) PRIMARY KEY,
-CampaignID int NOT NULL,
-ResponseDate date NOT NULL,
-ConvertedToSale bit NOT NULL,
-ConvertedSaleValueUSD decimal(20,2) NULL
+(	CampaignResponseID int IDENTITY(1,1) PRIMARY KEY,
+	CampaignID int NOT NULL,
+	ResponseDate date NOT NULL,
+	ConvertedToSale bit NOT NULL,
+	ConvertedSaleValueUSD decimal(20,2) NULL
 )
 
 GO
 
-ALTER TABLE Proseware.CampaignResponse WITH CHECK ADD  CONSTRAINT FK_CampaignResponse_Campaign FOREIGN KEY (CampaignID)
-REFERENCES Proseware.Campaign(CampaignID)
+ALTER TABLE Proseware.CampaignResponse WITH 
+	CHECK ADD  CONSTRAINT FK_CampaignResponse_Campaign FOREIGN KEY (CampaignID)
+	REFERENCES Proseware.Campaign(CampaignID)
 GO
-ALTER TABLE Proseware.CampaignResponse CHECK CONSTRAINT FK_CampaignResponse_Campaign
+ALTER TABLE Proseware.CampaignResponse 
+	CHECK CONSTRAINT FK_CampaignResponse_Campaign
 GO
-
 ;
+
 WITH myCTE
 AS
 (
@@ -97,16 +100,18 @@ AS
 )
 INSERT Proseware.CampaignResponse
 (CampaignID, ResponseDate, ConvertedToSale, ConvertedSaleValueUSD)
-SELECT c.CampaignID,
-DATEADD(dd, rn1 % 40, c.CampaignStartDate),
-c.rnd1,
-CASE WHEN rnd1 = 1 THEN rn1 * 1.99 ELSE NULL END
-FROM myCTE AS c
-WHERE c.rn1 <= c.CampaignID % 1000
+	SELECT c.CampaignID,
+	DATEADD(dd, rn1 % 40, c.CampaignStartDate),
+	c.rnd1,
+	CASE WHEN rnd1 = 1 THEN rn1 * 1.99 ELSE NULL END
+	FROM myCTE AS c
+	WHERE c.rn1 <= c.CampaignID % 1000
 GO
 
-UPDATE STATISTICS Proseware.Campaign WITH ROWCOUNT = 10, PAGECOUNT=  10;
-UPDATE STATISTICS Proseware.CampaignResponse WITH ROWCOUNT = 10, PAGECOUNT=  10;
+UPDATE STATISTICS Proseware.Campaign 	
+	WITH ROWCOUNT = 10, PAGECOUNT=  10;
+UPDATE STATISTICS Proseware.CampaignResponse 
+	WITH ROWCOUNT = 10, PAGECOUNT=  10;
 GO
 
 CREATE PROCEDURE Proseware.up_CampaignResponse_Add
