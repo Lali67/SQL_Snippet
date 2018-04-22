@@ -1,23 +1,22 @@
 # Analyzing Execution Plans
 ## Prepare the Lab Environment
+
 ```sql
 USE AdventureWorks2017;
 GO
-
+------ Delete predefined Procedures ----------------------
 IF EXISTS(select * from sys.objects
 where name='up_Campaign_Replace')
 BEGIN
 	DROP PROC Proseware.up_Campaign_Replace
 END
 GO
-
 IF EXISTS(select * from sys.objects
 where name='up_Campaign_Report')
 BEGIN
 	DROP PROC Proseware.up_Campaign_Report
 END
 GO
-
 IF EXISTS(select * from sys.objects
 where name='up_CampaignResponse_Add')
 BEGIN
@@ -25,13 +24,13 @@ BEGIN
 END
 GO
 
+-----  Delete Tables  -----------------------------------------
 IF EXISTS(select * from sys.objects
 where name='CampaignResponse')
 BEGIN
 	DROP TABLE Proseware.CampaignResponse
 END
 GO
-
 IF EXISTS(select * from sys.objects
 where name='Campaign')
 BEGIN
@@ -39,6 +38,7 @@ BEGIN
 END
 GO
 
+-----  Delete Schemas  -----------------------------------------
 IF EXISTS(select * from sys.schemas
 where name='Proseware')
 BEGIN
@@ -46,7 +46,7 @@ BEGIN
 END
 GO
 
--------------  Build Tables --------------
+------- Build Tables --------------------------------------------
 CREATE SCHEMA Proseware;
 GO
 CREATE TABLE Proseware.Campaign
@@ -77,7 +77,6 @@ CREATE TABLE Proseware.CampaignResponse
 	ConvertedToSale bit NOT NULL,
 	ConvertedSaleValueUSD decimal(20,2) NULL
 )
-
 GO
 
 ALTER TABLE Proseware.CampaignResponse WITH 
