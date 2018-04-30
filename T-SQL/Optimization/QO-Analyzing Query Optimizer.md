@@ -14,6 +14,7 @@ JOIN    Sales.SalesOrderHeader oh
 ```
   Have a look at the results of the execution plan, and we'll see we've got a "Clustered Index Scan" here, and this one is going to have a look at the "Product" table, and another "Index Scan" here, his one is having a "Sales" with a data table.
   So, there is no reference whatsoever to the ''Sales Order Header" table. The reason for that is the optimizer is efficient enough to realize that actually, it's impossible for there to be any information from "Sales Order Header". So, if is not possible that there is information from that table,it won't actually add that table to the plan.
+
 ![SQL-Join-Query Plan](../Pictures/SQL-Join-Query_Plan.png)
 
 ```sql
