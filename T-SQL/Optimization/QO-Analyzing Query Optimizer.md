@@ -1,19 +1,28 @@
 ## Samples
+  1. Run Task1
+  2. Have a look at the results of the execution plan, and we'll see we've got a "Clustered Index Scan" here, and this one is going to have a look at the "Product" table, and another "Index Scan" here, this one is having a sales with a data table.
+  
 ```sql
-SELECT pp.Name
-FROM Production.Product pp
-JOIN Sales.SalesOrderDetail ss
-ON pp.ProductID=ss.ProductID
-JOIN Sales.SalesOrderHeader oh
-ON ss.SalesOrderID=oh.SalesOrderID;
+-- Task1 (actually joining multiple tables)
+SELECT  pp.Name
+FROM    Production.Product pp
+JOIN    Sales.SalesOrderDetail ss
+  ON    pp.ProductID=ss.ProductID
+JOIN    Sales.SalesOrderHeader oh
+  ON    ss.SalesOrderID=oh.SalesOrderID;
+```
+Have a look at the results of the execution plan, and we'll see we've got a "Clustered Index Scan" here, and this one is going to have a look at the "Product" table, and another "Index Scan" here, his one is having a sales with a data table.
 
+![SQL-Join-Query Plan](../Pictures/SQL-Join-Query_Plan.png)
+
+```sql
 SELECT * 
-FROM HumanResources.Employee 
-WHERE SickLeaveHours=50;
+FROM    HumanResources.Employee 
+WHERE   SickLeaveHours=50;
 
-SELECT CHECK_CLAUSE
-FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS
-WHERE CONSTRAINT_NAME = 'CK_Employee_SickLeaveHours';
+SELECT  CHECK_CLAUSE
+FROM    INFORMATION_SCHEMA.CHECK_CONSTRAINTS
+WHERE   CONSTRAINT_NAME = 'CK_Employee_SickLeaveHours';
 ____________________________________________________________
 ```
 
