@@ -1,4 +1,4 @@
-## Query Plan Samples
+## Query Plan Samples with analyzing Query Optimizer
 ### Join tables
   1. Run Task1
   2. Have a look at the results of the execution plan, and we'll see we've got a "Clustered Index Scan" here, and this one is going to have a look at the "Product" table, and another "Index Scan" here, this one is having a sales with a data table.
