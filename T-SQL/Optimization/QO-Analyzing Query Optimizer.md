@@ -1,4 +1,5 @@
-## Samples
+## Query Plan Samples
+### Join tables
   1. Run Task1
   2. Have a look at the results of the execution plan, and we'll see we've got a "Clustered Index Scan" here, and this one is going to have a look at the "Product" table, and another "Index Scan" here, this one is having a sales with a data table.
   
@@ -11,8 +12,8 @@ JOIN    Sales.SalesOrderDetail ss
 JOIN    Sales.SalesOrderHeader oh
   ON    ss.SalesOrderID=oh.SalesOrderID;
 ```
-Have a look at the results of the execution plan, and we'll see we've got a "Clustered Index Scan" here, and this one is going to have a look at the "Product" table, and another "Index Scan" here, his one is having a sales with a data table.
-
+  Have a look at the results of the execution plan, and we'll see we've got a "Clustered Index Scan" here, and this one is going to have a look at the "Product" table, and another "Index Scan" here, his one is having a "Sales" with a data table.
+  So, there is no reference whatsoever to the ''Sales Order Header" table. The reason for that is the optimizer is efficient enough to realize that actually, it's impossible for there to be any information from "Sales Order Header". So, if is not possible that there is information from that table,it won't actually add that table to the plan.
 ![SQL-Join-Query Plan](../Pictures/SQL-Join-Query_Plan.png)
 
 ```sql
@@ -39,7 +40,7 @@ ORDER BY total_worker_time/execution_count DESC;
 ```
 
 ## Links
-[Query Processing Architecture Guide-Microsoft](https://docs.microsoft.com/en-us/sql/relational-databases/query-processing-architecture-guide?view=sql-server-2017)
+[Clustered and Nonclustered Indexes Described](https://docs.microsoft.com/en-us/sql/relational-databases/indexes/clustered-and-nonclustered-indexes-described?view=sql-server-2017)
 
 [System Dynamic Management Views-Microsoft](https://docs.microsoft.com/en-us/sql/relational-databases/system-dynamic-management-views/system-dynamic-management-views?view=sql-server-2017)
 
